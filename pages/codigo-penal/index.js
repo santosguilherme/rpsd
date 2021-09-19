@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Paper from '@material-ui/core/Paper';
+import { query } from 'services/criminalCode';
 
 const Container = styled.section``;
 
@@ -86,9 +87,8 @@ function CriminalCode({ criminalCode }) {
   );
 }
 
-export async function getStaticProps(context) {
-  const response = await fetch('http://localhost:3000/api/criminal-code');
-  const criminalCode = await response.json();
+export async function getStaticProps() {
+  const criminalCode = await query();
 
   return {
     props: {
