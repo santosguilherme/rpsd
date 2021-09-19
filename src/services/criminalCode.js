@@ -67,11 +67,6 @@ function extractItemsAndNotesFromRows(rows = []) {
   };
 }
 
-function clearArrayOfStrings(array = []) {
-  console.log(array);
-  return array.map(clearString);
-}
-
 const clearString = compose(removeLineBreakersFromString, trim);
 
 function removeLineBreakersFromString(string = '') {
