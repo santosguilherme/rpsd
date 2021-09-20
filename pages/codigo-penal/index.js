@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Paper from '@material-ui/core/Paper';
@@ -61,7 +62,7 @@ function CriminalCode({ criminalCode }) {
             <TableHeader columns={currentCategory.headers.length}>
               {currentCategory.headers.map((header, index) => (
                 <TableHeaderColumn
-                  key={`table-header-column-${index}-${header}`}
+                  key={`table-header-column-${uuidv4()}`}
                 >
                   {header}
                 </TableHeaderColumn>
@@ -69,10 +70,10 @@ function CriminalCode({ criminalCode }) {
             </TableHeader>
             <TableBody rows={currentCategory.items.length}>
               {currentCategory.items.map((rowItems, index) => (
-                <TableRow key={`table-row-${index}`} columns={rowItems.length}>
+                <TableRow key={`table-row-${uuidv4()}`} columns={rowItems.length}>
                   {rowItems.map((column) => (
                     <TableRowColumn
-                      key={`table-row-column-${rowItems[0]}-${column}`}
+                      key={`table-row-column-${uuidv4()}`}
                     >
                       {column}
                     </TableRowColumn>

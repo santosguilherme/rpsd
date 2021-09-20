@@ -33,9 +33,16 @@ export async function query() {
   const sheetsValues = sheetsValuesResponses.map(({ data }) => {
     const { values } = data;
 
-    return values
-      .filter((item) => item.length)
-      .map((item) => item.filter((item) => item).map(clearString));
+    const [, titleRaw, headersRaw, ...itemsRaw] = values;
+    const [, title] = titleRaw;
+    const [, ...headers] = headersRaw;
+    const items = itemsRaw.map(itemRaw => {
+      const [, ...rest] = itemRaw;
+
+      return rest;
+    });
+
+    return [[title], headers, ...items].map((item) => item.map(clearString));
   });
 
   return validSheets.map((sheetName, index) => {
@@ -67,7 +74,7 @@ function extractItemsAndNotesFromRows(rows = []) {
   };
 }
 
-const clearString = compose(removeLineBreakersFromString, trim);
+const clearString = compose(removeLineBreakersFromString, trim, preserveEmptyCell);
 
 function removeLineBreakersFromString(string = '') {
   return string.replace(/\r?\n|\r/g, ' ');
@@ -75,4 +82,8 @@ function removeLineBreakersFromString(string = '') {
 
 function trim(string = '') {
   return string.replace(/\s\s/g, ' ').trim();
+}
+
+function preserveEmptyCell(string = ''){
+  return ['', 'N/A', 'n/a'].includes(string) ? '-' : string
 }
